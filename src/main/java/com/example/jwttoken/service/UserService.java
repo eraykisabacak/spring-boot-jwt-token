@@ -5,6 +5,7 @@ import com.example.jwttoken.model.User;
 import com.example.jwttoken.repository.UserRepository;
 import com.example.jwttoken.response.CreateUserResponse;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -35,14 +37,14 @@ public class UserService implements UserDetailsService {
     }
 
     public CreateUserResponse createUser(CreateUserRequest request){
-        if(!userRepository.findByUsername(request.username()).isEmpty()){
+        if(!userRepository.findByUsername(request.getUsername()).isEmpty()){
             return CreateUserResponse.builder().message("This username already used").build();
         }
         User newUser = User.builder()
-                .name(request.name())
-                .username(request.username())
-                .password(bCryptPasswordEncoder.encode(request.password()))
-                .authorities(request.authorities())
+                .name(request.getName())
+                .username(request.getUsername())
+                .password(bCryptPasswordEncoder.encode(request.getPassword()))
+                .authorities(request.getAuthorities())
                 .accountNonExpired(true)
                 .credentialsNonExpired(true)
                 .isEnabled(true)
@@ -60,5 +62,4 @@ public class UserService implements UserDetailsService {
     public Optional<User> getByUsername(String username){
         return userRepository.findByUsername(username);
     }
-
 }
