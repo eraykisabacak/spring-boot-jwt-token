@@ -20,9 +20,9 @@ public class JwtService {
     @Value("${jwt.key}")
     private String SECRET;
 
-    public String generateToken(String userName){
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("abc","1321");
+        claims.put("abc", "1321");
         return createToken(claims, userName);
     }
 
@@ -36,26 +36,26 @@ public class JwtService {
                 .compact();
     }
 
-    private Key getSignKey(){
+    private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails){
+    public Boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUser(token);
         Date expirationDate = extractExpiration(token);
         return isUsername(username, userDetails) && isExpired(expirationDate);
     }
 
-    private boolean isUsername(String username, UserDetails userDetails){
+    private boolean isUsername(String username, UserDetails userDetails) {
         return userDetails.getUsername().equals(username);
     }
 
-    private Boolean isExpired(Date expirationDate){
+    private Boolean isExpired(Date expirationDate) {
         return expirationDate.after(new Date());
     }
 
-    private Date extractExpiration(String token){
+    private Date extractExpiration(String token) {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(getSignKey())

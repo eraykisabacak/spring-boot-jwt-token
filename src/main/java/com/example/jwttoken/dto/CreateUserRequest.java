@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserRequest{
+public class CreateUserRequest {
     @Size(min = 3, max = 37)
     @NotBlank(message = "Please enter the name field")
     private String name;

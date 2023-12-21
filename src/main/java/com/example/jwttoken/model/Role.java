@@ -12,11 +12,11 @@ public enum Role implements GrantedAuthority {
 
     private String value;
 
-    Role(String value){
+    Role(String value) {
         this.value = value;
     }
 
-    public String getValue(){
+    public String getValue() {
         return this.value;
     }
 

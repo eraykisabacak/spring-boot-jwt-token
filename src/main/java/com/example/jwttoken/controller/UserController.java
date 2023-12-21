@@ -4,6 +4,7 @@ import com.example.jwttoken.dto.AuthRequest;
 import com.example.jwttoken.dto.CreateUserRequest;
 import com.example.jwttoken.response.CreateUserResponse;
 import com.example.jwttoken.response.LoginResponse;
+import com.example.jwttoken.service.AuthenticationService;
 import com.example.jwttoken.service.JwtService;
 import com.example.jwttoken.service.UserService;
 import jakarta.validation.Valid;
@@ -11,9 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -29,46 +27,42 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
 
 
-    public UserController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager){
+    public UserController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager, AuthenticationService authenticationService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("/welcome")
-    public ResponseEntity<String> welcome(){
+    public ResponseEntity<String> welcome() {
         log.info("Welcome Page");
         return ResponseEntity.ok("Welcome Page");
     }
 
     @PostMapping("/register")
-    public CreateUserResponse addNewUser(@Valid @RequestBody CreateUserRequest createUserRequest){
+    public ResponseEntity<CreateUserResponse> addNewUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
         log.info("Add New User {} " + createUserRequest.getUsername());
-        return userService.createUser(createUserRequest);
+        return ResponseEntity.ok(userService.createUser(createUserRequest));
     }
 
     @PostMapping("/login")
-    public LoginResponse generateToken(@Valid @RequestBody AuthRequest authRequest){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if(authentication.isAuthenticated()){
-            var user = userService.getByUsername(authRequest.getUsername());
-            var token = jwtService.generateToken(authRequest.getUsername());
-            return LoginResponse.builder().user(user).token(token).build();
-        }
-        log.info("Invalid username {} " + authRequest.getUsername());
-        throw new UsernameNotFoundException("invalid username {}" + authRequest.getUsername());
+    public ResponseEntity<LoginResponse> generateToken(@Valid @RequestBody AuthRequest authRequest) {
+        log.info("Login, username {} " + authRequest.getUsername());
+        return ResponseEntity.ok(authenticationService.login(authRequest));
     }
 
     @GetMapping("/user")
-    public String getUser(){
-        return "getUser endpoint";
+    public ResponseEntity<String> getUser() {
+        return ResponseEntity.ok("getUser endpoint");
     }
 
     @GetMapping("/admin")
-    public String getAdmin(){
-        return "getAdmin endpoint";
+    public ResponseEntity<String> getAdmin() {
+        return ResponseEntity.ok("getAdmin endpoint");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
