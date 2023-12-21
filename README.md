@@ -1,4 +1,4 @@
-# Spring Boot - Spring Security - JWT Tabanlı Kullanıcı Doğrulama, Yetkilendirme, Register, Login 
+# Spring Boot - Spring Security - JWT Tabanlı Kullanıcı Doğrulama, Yetkilendirme, Register, Login ve RabbitMQ ile Email Gönderme
 
 Bu proje, Spring Boot ve Spring Security kullanılarak geliştirilmiş, JWT (JSON Web Token) tabanlı bir kullanıcı yetkilendirme ve kimlik doğrulama uygulamasını içermektedir. Temel amacı, güvenli bir şekilde kullanıcıların kaydolmalarını, giriş yapmalarını ve belirli rollerle korunan API endpointlerine erişmelerini sağlamaktır.
 
