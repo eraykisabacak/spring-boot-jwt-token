@@ -7,6 +7,7 @@ import com.example.jwttoken.response.LoginResponse;
 import com.example.jwttoken.service.AuthenticationService;
 import com.example.jwttoken.service.JwtService;
 import com.example.jwttoken.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     private final UserService userService;
