@@ -26,6 +26,11 @@ public class CreateUserRequest {
     @NotBlank(message = "Please enter the password field")
     private String password;
 
+    @NotBlank(message = "Please enter the email field")
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+            flags = Pattern.Flag.CASE_INSENSITIVE)
+    private String email;
+
     @NotEmpty(message = "Please enter the authorities field")
     Set<Role> authorities;
 }

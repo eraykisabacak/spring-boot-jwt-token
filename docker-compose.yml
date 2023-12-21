@@ -13,6 +13,20 @@ services:
       MYSQL_PASSWORD: pass
     volumes:
       - mysql-data:/var/lib/mysql
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: "rabbitmq-container"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"  # AMQP port
+      - "15672:15672" # RabbitMQ Management UI port
+    networks:
+      - my-network
 
 volumes:
   mysql-data:
+networks:
+  my-network:
+    driver: bridge
