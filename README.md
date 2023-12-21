@@ -38,6 +38,11 @@ Aşağıdaki yazılımların yüklü olduğundan emin olun:
     ```bash
     docker-compose up -d
     ```
+5. Eğer RabbitMQ ile email göndermek isterseniz application.properties dosyasına kendi gmail email ve password bilgilerinizi yazmanız lazım. (Google gmail ayarlardan bazı izinler vermeniz gerekebilir. )
+    ```bash
+    spring.mail.username=
+    spring.mail.password=
+    ```
 ## Kullanım
 
 Aşağıda proje tarafından sunulan API'lerin kullanımı hakkında bilgiler bulunmaktadır.
