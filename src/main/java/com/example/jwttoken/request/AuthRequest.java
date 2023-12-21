@@ -1,4 +1,4 @@
-package com.example.jwttoken.dto;
+package com.example.jwttoken.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

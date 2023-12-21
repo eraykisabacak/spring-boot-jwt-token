@@ -1,4 +1,4 @@
-package com.example.jwttoken.dto;
+package com.example.jwttoken.request;
 
 import com.example.jwttoken.model.Role;
 import jakarta.validation.constraints.*;

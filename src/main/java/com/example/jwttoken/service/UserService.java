@@ -1,6 +1,6 @@
 package com.example.jwttoken.service;
 
-import com.example.jwttoken.dto.CreateUserRequest;
+import com.example.jwttoken.request.CreateUserRequest;
 import com.example.jwttoken.model.Token;
 import com.example.jwttoken.model.User;
 import com.example.jwttoken.repository.TokenRepository;

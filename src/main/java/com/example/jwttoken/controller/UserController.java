@@ -1,7 +1,7 @@
 package com.example.jwttoken.controller;
 
-import com.example.jwttoken.dto.AuthRequest;
-import com.example.jwttoken.dto.CreateUserRequest;
+import com.example.jwttoken.request.AuthRequest;
+import com.example.jwttoken.request.CreateUserRequest;
 import com.example.jwttoken.response.CreateUserResponse;
 import com.example.jwttoken.response.LoginResponse;
 import com.example.jwttoken.service.AuthenticationService;
