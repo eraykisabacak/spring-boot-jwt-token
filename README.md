@@ -46,7 +46,7 @@ Aşağıda proje tarafından sunulan API'lerin kullanımı hakkında bilgiler bu
 
 **Endpoint:** `/auth/register` (POST)
 
-**Açıklama:** Kullanıcı kaydı oluşturur.
+**Açıklama:** Kullanıcı kaydı oluşturur ve RabbitMQ ile welcome emaili gönderilir.
 
 **Parametreler:**
 - `username` (zorunlu)
