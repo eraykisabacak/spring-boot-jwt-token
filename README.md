@@ -93,6 +93,12 @@ Aşağıda proje tarafından sunulan API'lerin kullanımı hakkında bilgiler bu
 
 **Açıklama:** JWT token ile kullanıcıyı sistemden çıkarır.
 
+### Swagger UI
+
+**Endpoint:** `/swagger-ui/index.html` (GET)
+
+**Açıklama:** Swagger UI gösterir.
+
 ## Katkıda Bulunma
 
 Eğer projeye katkıda bulunmak istiyorsanız, lütfen bir merge request oluşturun.
