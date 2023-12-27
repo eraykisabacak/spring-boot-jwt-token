@@ -44,7 +44,7 @@ public class AuthenticationService {
 
     public void saveToken(User user, String stringToken) {
         Token token = Token.builder()
-                .token(stringToken)
+                .user_token(stringToken)
                 .user(user)
                 .revoked(false)
                 .expired(false)

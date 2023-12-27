@@ -16,7 +16,7 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.name}")
-    public void sendEmail(String email) {
+    public void sendWelcomeEmail(String email) {
         log.info("Recieved Message From RabbitMQ: " + email);
         emailService.sendWelcomeEmail(email);
     }

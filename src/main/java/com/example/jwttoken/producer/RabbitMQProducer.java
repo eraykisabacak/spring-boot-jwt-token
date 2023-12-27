@@ -20,7 +20,7 @@ public class RabbitMQProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMailAddressToQueue(String email) {
+    public void sendWelcomeEmailToQueue(String email) {
         log.info("Sending Message : " + email);
         rabbitTemplate.convertAndSend(exchange, routingKey, email);
     }

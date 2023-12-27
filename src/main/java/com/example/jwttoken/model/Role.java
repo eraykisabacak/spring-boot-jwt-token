@@ -1,8 +1,5 @@
 package com.example.jwttoken.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 

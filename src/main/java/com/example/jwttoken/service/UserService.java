@@ -47,6 +47,9 @@ public class UserService implements UserDetailsService {
         if (!userRepository.findByUsername(request.getUsername()).isEmpty()) {
             return CreateUserResponse.builder().message("This username already used").build();
         }
+        if (!userRepository.findByEmail(request.getEmail()).isEmpty()) {
+            return CreateUserResponse.builder().message("This email already used").build();
+        }
         User newUser = User.builder()
                 .name(request.getName())
                 .username(request.getUsername())
@@ -63,7 +66,7 @@ public class UserService implements UserDetailsService {
         var token = jwtService.generateToken(registeredUser.getUsername());
         registeredUser.setToken(token);
         saveToken(registeredUser, token);
-        rabbitMQProducer.sendMailAddressToQueue(newUser.getEmail());
+        rabbitMQProducer.sendWelcomeEmailToQueue(newUser.getEmail());
         return CreateUserResponse.builder()
                 .user(registeredUser)
                 .message("Success").build();
@@ -71,7 +74,7 @@ public class UserService implements UserDetailsService {
 
     public void saveToken(User user, String stringToken) {
         Token token = Token.builder()
-                .token(stringToken)
+                .user_token(stringToken)
                 .user(user)
                 .revoked(false)
                 .expired(false)

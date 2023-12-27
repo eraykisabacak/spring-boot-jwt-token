@@ -20,7 +20,7 @@ public class Token {
     private Long id;
 
     @Column(unique = true)
-    private String token;
+    private String user_token;
     private boolean expired;
     private boolean revoked;
 
@@ -31,6 +31,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return token;
+        return user_token;
     }
 }

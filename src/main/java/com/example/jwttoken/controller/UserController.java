@@ -5,14 +5,12 @@ import com.example.jwttoken.request.CreateUserRequest;
 import com.example.jwttoken.response.CreateUserResponse;
 import com.example.jwttoken.response.LoginResponse;
 import com.example.jwttoken.service.AuthenticationService;
-import com.example.jwttoken.service.JwtService;
 import com.example.jwttoken.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +25,11 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final AuthenticationService authenticationService;
 
 
-    public UserController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager, AuthenticationService authenticationService) {
+    public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
         this.authenticationService = authenticationService;
     }
 
@@ -48,7 +42,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<CreateUserResponse> addNewUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
         log.info("Add New User {} " + createUserRequest.getUsername());
-        return ResponseEntity.ok(userService.createUser(createUserRequest));
+        return new ResponseEntity<>(userService.createUser(createUserRequest),HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -72,7 +66,7 @@ public class UserController {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach( error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
